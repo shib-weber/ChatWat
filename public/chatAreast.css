@@ -1,0 +1,153 @@
+body{
+    background:url('flower.avif');
+    background-size: cover;
+    background-repeat: no-repeat;;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+.txtbox{
+    display: flex;
+    gap: 1rem;
+}
+#text{
+    height: 30px;
+    width: 90%;
+}
+#bt{
+    background-color: rgb(47, 61, 255);
+    height: 40px;
+    width: 60px;
+    color: white;
+    border-radius: 1rem;
+}
+#post-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1100px;
+    height: 40px;
+    overflow-y: auto;
+}
+#post-display {
+    margin-top:2rem;
+    width: 80%;
+    height: 60vh;
+    overflow-y: auto;
+    border: 1px solid white;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.textmsg{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    overflow: auto;
+    height: 60px;
+    width:250px;
+    border-radius: 0.5rem;
+    background-color:rgb(47, 61, 255);
+    color: white;
+}
+.youbox{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content:center;
+    align-items: center;
+    margin-left: 75%;
+    margin-top: 0.5rem;
+    overflow: auto;
+    height: 60px;
+    width:250px;
+    border-radius: 0.5rem;
+    background-color: rgb(47, 61, 255);
+    color: white;
+}
+.youname{
+    height: 10px;
+    width: 200px;
+    display: flex;
+    text-align: center;
+    justify-content: right;
+    align-items:center;
+    color: wheat;
+    font-size: x-small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.oname{
+    height: 10px;
+    width: 200px;
+    display: flex;
+    text-align: left;
+    justify-content: left;
+    align-items:center;
+    color: wheat;
+    font-size: x-small;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.txt{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    height: 40px;
+    width:250px;
+    border-radius: 0.5rem;
+    background-color:transparent;
+    color: white;
+}
+h4{
+    position: relative;
+    color: white;
+    visibility: hidden;
+}
+.recentchat{
+    margin-left: -40%;
+    height: 50px;
+    width: 600px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: left;
+    gap: 2rem;
+    position: relative;
+    background-color: rgba(8, 12, 53, 0.815);
+}
+#user2{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.other{
+    font-size:xx-large;
+    position: relative;
+    color: white;
+}
+
+#contact{
+    position: absolute;
+    margin-left: -45%;
+    height: 30px;
+    width: 60px;
+    background-color: rgb(47, 61, 255);
+    border-radius: 0.5rem;
+    color: white;
+}
+#contact:hover{
+opacity: 0.7;
+}
+.seen{
+    position: relative;
+    margin-left: 200px;
+    opacity: 0.7;
+}

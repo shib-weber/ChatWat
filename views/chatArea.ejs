@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<link rel="stylesheet" href="chatAreast.css">
+<form action="/redirect" method="POST" id="redirect">
+    <button id="contact" type="submit"><--</button>
+</form>
+    <h4><div class="you" id="you"><%= name %></div></h4>
+    <div class="recentchat">
+        <img src=<%= pic %> id="user2">
+        <div class="other" id="other"><%= tname %></div>
+    </div>
+    
+    <div class="postarea" id="post-display">
+        <p></p>
+        <% if (locals.texts) { %>
+            <% texts.filter(text => text !== undefined && text !== null).forEach(text => { %>
+                <% if (text.SenderName==name) { %>
+                    <p><div class="youbox">
+                        <div class="youname">You</div>
+                        <div class="txt"><%= text.chat %></div>
+                        <% if (text.seen==1) { %>
+                         <div class="seen">seen</div>
+                        <% } %>
+                    </div></p>
+                <% } else { %>
+                    <p> <div class="textmsg">
+                        <div class="oname"><%=text.SenderName %></div>
+                        <div class="txt"><%= text.chat %></div>
+                        <% if (text.seen==1) { %>
+                            <div class="seen">seen</div>
+                           <% } %>
+                    </div></p>
+                <% } %>
+            <% }) %>
+        <% } %>
+    </div>
+    <div class="txtbox" id="post-input">
+            <input  id="text" type="text" name="message" placeholder="Message" required>
+            <button id="bt" type="submit">send</button>
+    </div>
+  
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        const post=document.getElementById('post-display');
+        post.scrollTop =post.scrollHeight;
+         
+        const socket=io();
+        const text1=document.querySelector('#post-display')
+        const text=document.querySelector('#text')
+        const you=document.querySelector('#you')
+        const receive=document.querySelector('#other')
+
+
+        
+        socket.on('user-message',({txtmsg,name,receiver})=>{
+            const cname=you.innerHTML;
+            if(cname==name){
+                const p= document.createElement('div')
+                const p1=document.createElement('div')
+                const p2=document.createElement('div')
+                p.id='youbox';
+                p.className='youbox';
+                p1.className='youname';
+                p2.className='txt';
+                p1.innerText='You';
+                p2.innerText=txtmsg;
+                p.appendChild(p1);
+                p.appendChild(p2);
+                text1.appendChild(p);
+                const post=document.getElementById('post-display');
+                post.scrollTop =post.scrollHeight;
+            }
+            else{
+                const p= document.createElement('div')
+                const p1=document.createElement('div')
+                const p2=document.createElement('div')
+                p.className='textmsg';
+                p1.className='oname';
+                p2.className='txt';
+                p1.innerText=name;
+                p2.innerText=txtmsg;
+                p.appendChild(p1);
+                p.appendChild(p2);
+                text1.appendChild(p);
+                const post=document.getElementById('post-display');
+                post.scrollTop =post.scrollHeight;
+            }
+        })
+        
+        const bt=document.querySelector('#bt')
+        
+        bt.addEventListener('click',()=>{
+            const name=you.innerHTML;
+            const receiver=receive.innerHTML;
+            const txtmsg=text.value;
+            if(txtmsg!=''){
+                socket.emit('user-message',{txtmsg,name,receiver});
+                text.value='';
+                text.setAttribute('placeholder', defaultPlaceholder); 
+            }
+        })
+    
+        
+    </script>
+</body>
+</html>

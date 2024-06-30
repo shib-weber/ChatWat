@@ -1,0 +1,197 @@
+body{
+    background:url('flower.avif');
+    background-size: cover;
+    background-repeat: no-repeat;;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+h1{
+    margin-left: -70%;
+    background: white;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    background-clip: text;
+    color: transparent;
+    
+}
+.otherinfo{
+    display: flex;
+    gap: 1rem;
+    text-align: center;
+    justify-content: left;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    overflow: auto;
+    height: 60px;
+    width:280px;
+    border-radius: 0.5rem;
+    background-color: rgba(17, 30, 172, 0.377);
+    color: white;
+}
+
+#logout{
+    position: absolute;
+    margin-top: -35%;
+    margin-left: 80%;
+    height: 30px;
+    width: 60px;
+    background-color: rgb(47, 61, 255);
+    border-radius: 0.5rem;
+    color: white;
+}
+#logout:hover{
+    background-color:#45f3ff;
+    color: black;
+}
+.contactbox{
+    position: relative;
+    width: 300px;
+    height: 400px;
+    overflow-y: auto;
+    border-radius: 1rem;
+    background: rgba(8, 12, 53, 0.815) ;
+}
+.myinfo{
+    margin-left: -50%;
+    height: 150px;
+    width: 600px;
+    display: flex;
+    gap: 6rem;
+    justify-content: left;
+    align-items: center;
+    position: relative;
+    background-color: rgba(47, 61, 255, 0.637);
+}
+img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#MyPic{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#upload{
+    visibility: hidden;
+}
+.online{
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 30px;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #45f3ff;
+}
+.contactList{
+    width: 170px;
+    height: 40px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.notify{
+    background-color: #45f3ff;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+.Meonline{
+    position: absolute;
+    margin-left: 110px;
+    margin-top: 100px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color:  #45f3ff;
+}
+.searchncontact{
+    margin-top: 1rem;
+    height: 400px;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    gap: 25%;
+    background: transparent;
+}
+.share{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 600px;
+    background-color:rgba(8, 12, 53, 0.815);
+}
+#sharebtn{
+    background-color:rgb(47, 61, 255) ;
+    font-size: xx-large;
+    color: white;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+#sharebtn:hover{
+    border-color: white;
+    opacity: 0.5;
+}
+.searchbox{
+    margin-left: 45%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 600px;
+    border-radius: 2rem;
+    background-color:rgb(47, 61, 255) ;
+}
+#searchi{
+    position: fixed;
+    height: 40px;
+    width: 500px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+}
+#results{
+    position: absolute;
+    top: 100%;
+    max-height: 200px; 
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    z-index: 1000;
+}
+#results li{
+    color: white;
+    padding: 10px;
+}
+.SearchList{
+    position: relative;
+    display: flex;
+    justify-content: left;
+    height: 20px;
+    width: 500px;
+    background-color:rgba(10, 17, 94, 0.815);
+}
+.SearchList:hover{
+    border: 1px solid white;
+    opacity: 0.7;
+}

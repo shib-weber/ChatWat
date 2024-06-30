@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" href="mycontactst.css">
+    <button id="logout">Logout</button>
+    <div class="myinfo">
+        <img id="MyPic" src=<%= pic.Pp %>>
+        <div class="Meonline"></div>
+        <input id="upload" type="file" accept="images/jpeg, images/png, images/jpg">
+         <h1><div class="myname"><%= name %></div></h1>
+    </div>
+<div class="searchbox">
+    <input id="searchi" type="text" placeholder="Search user">
+    <ul id="results"></ul>
+</div>
+<div class="searchncontact">
+    <div class="contactbox">
+        <% if (Array.isArray(locals.contacts) && locals.contacts.length > 0) { %>
+            <% contacts.forEach((contact,index) => { %>
+             <p><div class="otherinfo">
+                <% if (Array.isArray(locals.userpp) && locals.userpp.length > 0) { %>
+                    <img src=<%= userpp[index] %>>
+                <% }  %>
+                <% if (useron[index] == 1) { %>
+                    <div class="online"></div>
+                <% } %>
+                <div class="contactList" id=contact.name><%= contact %></div>  
+                <% if (locals.notifyn) { %>
+                    <% if (notifyn[index]>0) { %>
+                        <div class="notify"><%= notifyn[index] %></div> 
+                    <% } %>
+                <% } %> 
+             </div></p>
+            <% }) %>
+           <% } %>
+     </div>
+     <div class="share">
+        <button id="sharebtn">+</button>
+        <p>Share With Your Closed One</p>
+     </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+
+    setInterval(function() {
+        location.reload();
+      }, 60000);
+    const logout=document.querySelector('#logout')
+    logout.addEventListener('click',()=>{
+        fetch('/logout').then(response => {
+            return response.text(); 
+        })
+        .then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+        })
+    })
+    document.addEventListener('DOMContentLoaded',async()=>{
+        const contacts=document.querySelectorAll('.contactList')
+        contacts.forEach(contact => {
+        contact.addEventListener('click',async ()=>{
+            const myname=document.querySelector('.myname').innerHTML;
+            const tname= contact.textContent;
+
+                const response = await fetch('/chatArea', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ myname: myname, tname: tname }),
+                }).then(response => {
+                    return response.text(); 
+                })
+                .then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                })
+            
+        });
+    });
+
+    })
+    
+    document.getElementById('MyPic').addEventListener('click', function() {
+        document.getElementById('upload').click();
+    });
+    
+    document.getElementById('upload').addEventListener('change', function(event) {
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('MyPic').src = e.target.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        const file = this.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('profilePic', file);
+
+        fetch('/upload',{
+            method:'PUT',
+            body:formData,
+        }).then(response => {
+            return response.text(); 
+        })
+        .then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+        })
+    }
+});
+    
+const share=document.querySelector('#sharebtn')
+share.addEventListener('click',()=>{
+    if(navigator.share){
+        navigator.share({
+            url:'http://localhost:8008/mycontact'
+        })
+    }
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchBar = document.getElementById('searchi');
+    const resultsList = document.getElementById('results');
+
+    searchBar.addEventListener('input', () => {
+        const query = searchBar.value;
+
+        if (query.length > 0) {
+            fetch(`/search?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    resultsList.innerHTML = '';
+                    data.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.className='SearchList';
+                        listItem.id='SearchList';
+                        listItem.textContent = `${user.Name}`;
+                        resultsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+        } else {
+            resultsList.innerHTML = '';
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded',async()=>{
+    const SearchLists=document.getElementById('results')
+    SearchLists.addEventListener('click', async function(event) {
+        if (event.target && event.target.nodeName === 'LI') {
+            const myname=document.querySelector('.myname').innerHTML;
+            const tname= event.target.textContent;
+
+            const response = await fetch('/chatArea', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ myname: myname, tname: tname }),
+            }).then(response => {
+                return response.text(); 
+            })
+            .then(html => {
+                document.open();
+                document.write(html);
+                document.close();
+            })
+        }
+        
+    });
+        
+});
+
+
+</script>
+    
+</body>
+</html>

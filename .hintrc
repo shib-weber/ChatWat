@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "axe/forms": "off",
+    "axe/text-alternatives": "off",
+    "compat-api/html": "off",
+    "apple-touch-icons": "off"
+  }
+}
