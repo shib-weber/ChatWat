@@ -47,10 +47,16 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-
-    setInterval(function() {
-        location.reload();
+    sessionStorage.setItem('activePage', 'mycontact');
+    window.reloadInterval = setInterval(() => {
+        if (sessionStorage.getItem('activePage') === 'mycontact') {
+          location.reload();
+        }
       }, 60000);
+    
+      window.addEventListener('beforeunload', () => {
+        clearInterval(window.reloadInterval);
+      });
     const logout=document.querySelector('#logout')
     logout.addEventListener('click',()=>{
         fetch('/logout').then(response => {

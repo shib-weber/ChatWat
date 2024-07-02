@@ -34,3 +34,30 @@ p{
 #bt:hover{
     opacity: 0.7;
 }
+@media(max-width:600px){
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+        align-content: center;
+        height: 750px;
+        width: 300px;
+        overflow: hidden;
+    }
+    .chatwat{
+        margin-left: 2rem;
+        margin-top: -2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        scale: 0.7;
+    }
+    p{
+        margin-left: 3rem;
+    }
+    #bt{
+        margin-left: 3rem;
+    }
+}

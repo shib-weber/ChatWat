@@ -48,6 +48,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
+        sessionStorage.setItem('activePage', 'chatArea');
+
         const post=document.getElementById('post-display');
         post.scrollTop =post.scrollHeight;
          
@@ -107,6 +109,24 @@
             }
         })
     
+        const postDisplayContainer = document.querySelector('#post-display');
+        const inputField = document.querySelector('#post-input');
+
+        function adjustHeight() {
+            const viewportHeight = window.innerHeight;
+            const headerHeight = document.querySelector('.recentchat').offsetHeight;
+            const inputHeight = inputField.offsetHeight;
+
+            postDisplayContainer.style.height = `${viewportHeight - headerHeight}px`;
+        }
+
+        window.addEventListener('resize', adjustHeight);
+        inputField.addEventListener('focus', () => {
+            setTimeout(adjustHeight, 300);
+        });
+        inputField.addEventListener('blur', adjustHeight); 
+
+        adjustHeight();
         
     </script>
 </body>

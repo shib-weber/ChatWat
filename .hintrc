@@ -6,6 +6,7 @@
     "axe/forms": "off",
     "axe/text-alternatives": "off",
     "compat-api/html": "off",
-    "apple-touch-icons": "off"
+    "apple-touch-icons": "off",
+    "compat-api/css": "off"
   }
 }

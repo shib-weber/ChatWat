@@ -195,3 +195,98 @@ img{
     border: 1px solid white;
     opacity: 0.7;
 }
+@media (max-width: 600px) {
+    html, body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        overflow: hidden; 
+        margin: 0;
+        padding: 0;
+    }
+    #logout{
+        margin-left: 85%;
+        margin-top: -42rem;
+        scale: 0.7;
+    }
+    .myinfo{
+        font-size: large;
+        display: flex;
+        scale: 0.5;
+        margin-left: -3rem;
+        margin-top: -10rem;
+    }
+    .searchbox{
+        margin-left: 1%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 350px;
+    }
+    #searchi{
+        font-size: x-large;
+        position: fixed;
+        height: 50px;
+        width: 300px;
+        background-color: transparent;
+        color: white;
+        border: none;
+        outline: none;
+    }
+    #results{
+        position: absolute;
+        top: 100%;
+        width: 350px;
+        max-height: 200px; 
+        overflow-y: auto;
+        list-style: none;
+        padding: 0;
+        z-index: 1000;
+    }
+    #results li{
+        font-size: x-large;
+        color: white;
+        padding: 10px;
+        border-bottom: 1px solid whitesmoke;
+    }
+    .SearchList{
+        position: relative;
+        display: flex;
+        justify-content: left;
+        height: 20px;
+        width: 350px;
+        background-color:rgba(10, 17, 94, 0.815);
+    }
+    .share{
+        width: 200px;
+    }
+    .searchncontact{
+        display: flex;
+        gap: 4%;
+    }
+    .contactbox{
+        margin-left: 20%;
+        position: relative;
+        width: 350px;
+        height: 500px;
+        overflow-y: auto;
+        border-radius: 1rem;
+        background: rgba(8, 12, 53, 0.815) ;
+    }
+    .otherinfo{
+        height: 60px;
+        width:320px;
+        padding-left: 2%;
+    }
+    .contactList{
+        width: 200px;
+        height: 40px;
+        font-size: x-large;
+    }
+}

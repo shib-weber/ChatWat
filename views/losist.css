@@ -99,3 +99,43 @@ span{
     height: 30px;
     border-radius: 40%
 }
+@media (max-width: 600px) {
+    html, body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        overflow: hidden; 
+        margin: 0;
+        padding: 0;
+    }
+    .data{
+        margin-left: 2rem;
+        margin-top: -5rem;
+        scale: 0.8;
+    }
+    .login{
+        margin-left: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: large;
+    }
+    .sign{
+        margin-left: 3rem;
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: large;
+        }
+        .notice{
+            margin-left: 2rem;
+            margin-top: -34rem;
+        }
+}
