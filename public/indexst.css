@@ -24,6 +24,10 @@ p{
     text-align: center;
     font-size: larger;
 }
+.btns{
+    display: flex;
+    gap: 2rem;
+}
 #bt{
     background: linear-gradient(90deg,#45f3ff,white);
     height: 50px;
@@ -32,6 +36,16 @@ p{
     border-radius: 2rem;
 }
 #bt:hover{
+    opacity: 0.7;
+}
+#installButton{
+    background: linear-gradient(90deg,#45f3ff,white);
+    height: 50px;
+    width: 150px;
+    color:black;
+    border-radius: 2rem;
+}
+#installButton:hover{
     opacity: 0.7;
 }
 @media(max-width:600px){
