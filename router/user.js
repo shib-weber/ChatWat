@@ -31,18 +31,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-router.use(session({
-    secret: 'Yes_You_Are_Mine25',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-}));
+
 
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) return res.redirect('/home')
   
-    jwt.verify(token, process.env.secret_key, (err, decoded) => {
+     const secret_key='I_still_want_you';
+    jwt.verify(token, secret_key, (err, decoded) => {
       if (err) return res.status(403).json({ message: 'Invalid Token' });
       req.user = decoded;
       next();
@@ -76,8 +72,6 @@ router.post("/signup",async(req,res)=>{
         })
         return res.render('login',{alert:'Try Logging In'})
     }
-
-
  })
 
  router.get('/login',(req,res)=>{
@@ -108,8 +102,8 @@ router.post("/login",async (req,res)=>{
             userde.online=1;
             await User.updateOne({ _id: userde._id },{$set: {online: 1 }});
         }
-        
-        const token = jwt.sign({username: userde }, process.env.secret_key, {expiresIn: '1h'});
+        const secret_key='I_still_want_you';
+        const token = jwt.sign({username: userde }, secret_key, {expiresIn: '1h'});
         res.cookie('token', token,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000 
@@ -119,7 +113,7 @@ router.post("/login",async (req,res)=>{
  });
 
 
-router.get('/mycontact',checkAuth,async(req,res)=>{
+router.get('/mycontact',verifyToken,async(req,res)=>{
     router.use(express.static(path.join(__dirname, '../public')));
     const Name=req.user.username.Name;
     const allcontact=await User.find({});
@@ -154,10 +148,10 @@ router.get('/search', async (req, res) => {
 });
 
 
-router.put('/upload', upload.single('profilePic'), checkAuth,async(req, res) => {
+router.put('/upload', upload.single('profilePic'), verifyToken,async(req, res) => {
     const { filename, url } = req.body;
     const profilePicPath = `/uploads/${req.file.filename}`;
-    const userId=req.session.user._id;
+    const userId=req.user.username._id;
     const user = await User.findByIdAndUpdate(userId, {
         Pp: profilePicPath
     })
