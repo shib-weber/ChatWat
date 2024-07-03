@@ -18,7 +18,6 @@ const server=http.createServer(app);
 const io=new Server(server);
 
 
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:false}))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

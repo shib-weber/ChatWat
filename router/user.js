@@ -7,11 +7,13 @@ const {Server}=require('socket.io')
 const session = require('express-session');
 const {checkAuth}=require('../middlewares/authentication')
 const multer = require('multer');
+const jwt =require('jsonwebtoken')
+const cookieParser = require('cookie-parser');
 
 
 const router=express.Router();
 router.use(express.json());
-router.use(express.static(path.join(__dirname, '../public')));
+router.use(cookieParser());
 
 
 router.use('/uploads', express.static('uploads')); 
@@ -35,7 +37,28 @@ router.use(session({
     cookie: { secure: false },
 }));
 
-router.get('/',(req,res)=>{
+const verifyToken = (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) return res.redirect('/home')
+  
+    const secret_key='hello'
+    jwt.verify(token, secret_key, (err, decoded) => {
+      if (err) return res.status(403).json({ message: 'Invalid Token' });
+      req.user = decoded;
+      next();
+    });
+  };
+
+
+  router.get('/',verifyToken,(req,res)=>{
+    if(req.user.username){
+        res.redirect('/mycontact')
+    }
+})
+
+router.get('/home',(req,res)=>{
+    router.use(express.static(path.join(__dirname, '../public')));
+        
     res.sendFile(path.join(__dirname,'../public','index.html'))
 })
 
@@ -58,21 +81,18 @@ router.post("/signup",async(req,res)=>{
  })
 
  router.get('/login',(req,res)=>{
-    return res.redirect('/');
+    return res.redirect('/home');
  })
 
-router.get('/logout',checkAuth,async (req, res) => {
-    const userde=req.session.user;
+ router.get('/logout',verifyToken,async (req, res) => {
+    const userde=req.user.username;
     if(userde.online==1){
        await User.updateOne({ _id: userde._id }, {$set :{online: 0 }});
     }
-    req.session.destroy(err => {
-        if (err) {
-            return res.send('Error logging out');
-        }
-        
-    });
-    return res.redirect('/');
+    res.clearCookie('token', {
+        httpOnly: true,
+      });
+    return res.redirect('/home');
 });
 
 router.post("/login",async (req,res)=>{
@@ -88,15 +108,20 @@ router.post("/login",async (req,res)=>{
             userde.online=1;
             await User.updateOne({ _id: userde._id },{$set: {online: 1 }});
         }
-        req.session.user=userde;
-        const allcontact=await User.find({});
-        return res.redirect('/mycontact')
+        const secret_key='hello'
+        const token = jwt.sign({username: userde }, secret_key, {expiresIn: '1h'});
+        res.cookie('token', token,{
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000 
+          });
+        return res.redirect('/mycontact') 
     }
  });
 
 
 router.get('/mycontact',checkAuth,async(req,res)=>{
-    const Name=req.session.user.Name;
+    router.use(express.static(path.join(__dirname, '../public')));
+    const Name=req.user.username.Name;
     const allcontact=await User.find({});
     const Cuser=await allcontact.find(user=>user.Name==Name);
     const dbname=await allcontact.map(user=>user.Name);
@@ -113,7 +138,7 @@ router.get('/mycontact',checkAuth,async(req,res)=>{
         tonotify[i]=userchat.length;
     }
     console.log
-    return res.render('mycontact',{name:Name,contacts:Cuser.contacts,pic:req.session.user,userpp:userpp,useron:useron,notifyn:tonotify});
+    return res.render('mycontact',{name:Name,contacts:Cuser.contacts,pic:req.user.username,userpp:userpp,useron:useron,notifyn:tonotify});
 })
 
 router.get('/search', async (req, res) => {
@@ -139,6 +164,7 @@ router.put('/upload', upload.single('profilePic'), checkAuth,async(req, res) => 
 })
 
 router.post('/chatArea',async(req,res)=>{
+    router.use(express.static(path.join(__dirname, '../public')));
     const user1=req.body.myname;
     const user2=req.body.tname;
     const allchats= await Chats.find({});
