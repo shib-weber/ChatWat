@@ -38,7 +38,7 @@ const verifyToken = (req, res, next) => {
     if (!token) return res.redirect('/home')
   
     jwt.verify(token, process.env.secret_key, (err, decoded) => {
-      if (err) return res.status(403).json({ message: 'Invalid Token' });
+      if (err) return res.redirect('/home')
       req.user = decoded;
       next();
     });
