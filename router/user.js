@@ -37,8 +37,7 @@ const verifyToken = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) return res.redirect('/home')
   
-     const secret_key='I_still_want_you';
-    jwt.verify(token, secret_key, (err, decoded) => {
+    jwt.verify(token, process.env.secret_key, (err, decoded) => {
       if (err) return res.status(403).json({ message: 'Invalid Token' });
       req.user = decoded;
       next();
@@ -102,8 +101,8 @@ router.post("/login",async (req,res)=>{
             userde.online=1;
             await User.updateOne({ _id: userde._id },{$set: {online: 1 }});
         }
-        const secret_key='I_still_want_you';
-        const token = jwt.sign({username: userde }, secret_key, {expiresIn: '1h'});
+
+        const token = jwt.sign({username: userde }, process.env.secret_key, {expiresIn: '1h'});
         res.cookie('token', token,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000 
