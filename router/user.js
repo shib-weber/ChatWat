@@ -102,7 +102,7 @@ router.post("/login",async (req,res)=>{
             await User.updateOne({ _id: userde._id },{$set: {online: 1 }});
         }
 
-        const token = jwt.sign({username: userde }, process.env.secret_key, {expiresIn: '1h'});
+        const token = jwt.sign({username: userde }, process.env.secret_key, {expiresIn: '30d'});
         res.cookie('token', token,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000 
